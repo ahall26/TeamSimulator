@@ -1,4 +1,3 @@
-import json
 from collections import OrderedDict
 from random import Random
 
@@ -35,13 +34,24 @@ def create_team(num=1, team_size=Random().randint(3, 10), company=Faker().last_n
         ]), length=1, unique=False)[0]
 
     def get_ethnicity():
-        return Faker().random_elements(elements=OrderedDict([
-            (["light", "Asian"], 0.03),
-            (["medium-dark", "Pacific Islander"], 0.02),
-            (["dark", "Black or African American"], 0.11),
-            (["medium", "Hispanic or Latino"], 0.15),
-            (["medium-light", "White"], 0.69)
+        e = Faker().random_elements(elements=OrderedDict([
+            ("a", 0.03),
+            ("p", 0.02),
+            ("b", 0.11),
+            ("l", 0.15),
+            ("w", 0.69)
         ]), length=1, unique=False)[0]
+        if e == "a":
+            group = ["light", "Asian"]
+        if e == "p":
+            group = ["medium-dark", "Pacific Islander"]
+        if e == "b":
+            group = ["dark", "Black or African American"]
+        if e == "l":
+            group = ["medium", "Hispanic or Latino"]
+        if e == "w":
+            group = ["medium-light", "White"]
+        return group
 
     def get_job():
         member['jobavatar'] = jobs[f"{member['gender']}:{member['skin_tone']}:{occupation}"]
@@ -3962,25 +3972,9 @@ def create_team(num=1, team_size=Random().randint(3, 10), company=Faker().last_n
 
         ratings.append(team['team_percentage'])
         # team_json = json.dumps(team, indent=2, sort_keys=False)
-    return json.dumps(team, indent=2)
+    return team
 
 
 class Team:
     def __init__(self):
-        pass
-
-    # teams = []
-    # infjwin = False
-    # while infjwin is False:
-    #     team_json = create_team()
-    #     for x in team_json['team_members']:
-    #         if x['personality'] == 'INFJ':
-    #             teams.append(team_json)
-    #             print(json.dumps(team_json))
-    #             infjwin = True
-
-    # f = open(
-    #     'C:\\Users\\aries\\source\\repos\\DapperTest\\DapperGenerator\\ClientApp\\src\\components\\sampleteam.json',
-    #     "w")
-    # f.write(team_json)
-    # f.close()
+        return create_team()
