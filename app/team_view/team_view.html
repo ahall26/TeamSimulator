@@ -1,28 +1,58 @@
 <div ng-app="myApp.team_view">
     <h4>Create a Team</h4>
-    <dl>
-        <p><strong>Name: </strong>{{ myData.team.team_name }}</p>
-        <p><strong>Company: </strong>{{ myData.team.team_company }}</p>
-        <p><strong>Size: </strong>{{ myData.team.team_size }}</p>
-        <p><strong>Role: </strong>{{ myData.team.team_role }}</p>
-    </dl>
-    <dl>
-        <strong>Members: </strong>
-        <div ng-repeat="mem in myData.team.team_members">
-            <h3>{{mem.name}}</h3>
-            <img src={{mem.jobavatar.Source}}>
-            <dl>
-                <dd>Personality:{{mem.personality}}</dd>
-                <dd>Age: {{mem.age}}</dd>
-                <dd>Ethnicity: {{mem.ethnicity}}</dd>
-                <dd>Gender: {{mem.gender}}</dd>
-                <dd>Happiness: {{mem.happiness}}%</dd>
-                <dd>Status: {{mem.status}}</dd>
-                <dd>Title: {{mem.title + ' ' + mem.level}}</dd>
+    <p><strong>Name: </strong>{{ myData.team.team_name }}</p>
+    <p><strong>Company: </strong>{{ myData.team.team_company }}</p>
+    <p><strong>Size: </strong>{{ myData.team.team_size }}</p>
+    <p><strong>Role: </strong>{{ myData.team.team_role }}</p>
+    <strong>Members: </strong>
+    <div class="row" style="display: flex;">
+        <div class="item" ng-repeat="mem in myData.team.team_members">
+            <div class="profCard" style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
+                <h2>{{mem.name}}</h2>
+                <img class="avatar" src={{mem.jobavatar.Source}}>
+                <div class="personaCard">
+                    <span class={{mem.mbti.Class}}></span>
+                    <p>
+                        <b>{{mem.mbti.AltName}}</b>
+                        <i>{{mem.mbti.Description}}</i>
+                    </p>
+                </div>
+                <table class="description">
+                    <tr>
+                        <td>Personality:</td>
+                        <td>{{mem.personality}}</td>
+                    </tr>
+                    <tr>
+                        <td>Age:</td>
+                        <td>{{mem.age}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ethnicity:</td>
+                        <td>{{mem.ethnicity}}</td>
+                    </tr>
+                    <tr>
+                        <td>Gender:</td>
+                        <td>{{mem.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ethnicity:</td>
+                        <td>{{mem.ethnicity}}</td>
+                    </tr>
+                    <tr>
+                        <td>Happiness:</td>
+                        <td>{{mem.happiness}}</td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        <td>{{mem.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>Title:</td>
+                        <td>{{mem.title + ' ' + mem.level}}</td>
+                    </tr>
+                </table>
 
-            </dl>
+            </div>
         </div>
-
-    </dl>
-
+    </div>
 </div>
