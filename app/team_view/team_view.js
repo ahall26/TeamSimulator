@@ -14,7 +14,7 @@ angular.module('myApp.team_view', ['ngRoute'])
             method: "GET",
             url: "http://localhost:8080"
         }).then(function (response) {
-            $scope.myData = response.data;
-            console.log(response.data);
+            $scope.myData = JSON.parse(response.data);
+            console.log($scope.myData);
         });
     });
