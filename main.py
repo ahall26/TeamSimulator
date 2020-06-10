@@ -9,7 +9,7 @@ app = FastAPI()
 
 
 @app.get("/")
-async def read_root():
+async def generate_team(team_size: int = 3):
     headers = {"Access-Control-Allow-Origin": "*"}
-    team = json.dumps({"team": create_team()})
+    team = json.dumps({"team": create_team(team_size=team_size)})
     return JSONResponse(content=team, headers=headers)

@@ -3427,5 +3427,5 @@ def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Fake
 
 
 class Team:
-    def __init__(self):
-        return create_team()
+    def get_team(self, team_size=3):
+        return create_team(team_size=team_size)

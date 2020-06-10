@@ -1,12 +1,19 @@
-<div ng-app="myApp.team_view" ng-init="prof=myData.team.team_members[0]">
+<div ng-app="myApp.team_view">
     <div class="main">
         <div>
-            <h4>Create a Team</h4>
-            <p>{{prof.name}}</p>
-            <p><strong>Name: </strong>{{ myData.team.team_name }}</p>
-            <p><strong>Company: </strong>{{ myData.team.team_company }}</p>
-            <p><strong>Size: </strong>{{ myData.team.team_size }}</p>
-            <p><strong>Role: </strong>{{ myData.team.team_role }}</p>
+            <div class="teamMain">
+                <div class="createTeam">
+                    <h4>Create a Team</h4>
+                    <table>
+                        <div><strong>Name: </strong> <input ng-bind="myData.team.team_name"
+                                                            value="{{myData.team.team_name}}"></input></div>
+                        <div><strong>Company: </strong> <input value="{{ myData.team.team_company }}"></div>
+                        <div><strong>Size: </strong> <input type="number" value="{{ myData.team.team_size }}"></input>
+                        </div>
+                        <p><strong>Role: </strong>{{ myData.team.team_role }}</p>
+                    </table>
+                </div>
+            </div>
             <strong>Members: </strong>
             <div class="row" style="display: flex;">
                 <div class="item" ng-mouseover="prof = mem" ng-repeat="mem in myData.team.team_members">
