@@ -1,3 +1,4 @@
+
 .avatar {
     background: #9e9e9e61;
     border-radius: 0.1em;
@@ -11,21 +12,36 @@
     font-weight: bold;
     font-size: 1rem;
     text-align: center;
-    max-width: 480px;
+    width: 380px;
     padding: 2rem;
     margin: 1rem;
     padding-top: 2px;
+    -webkit-box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
+    box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
+
 }
 
 .profCard:hover {
-    -webkit-box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
-    box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
-    margin: -.2rem;
-    z-index: -1;
+    transform: scale(1.3);
+}
+
+.description {
+    text-align: left;
+    width: 100%;
+    display: none;
+}
+
+
+.profCard:hover .description {
+    display: block;
+}
+
+.profCard:hover .details {
+    display: flex;
 }
 
 .personaCard {
-    box-shadow: rgba(0, 0, 0, 0.22) 45px 0px 57px 33px inset;
+    box-shadow: rgba(0, 0, 0, 0.22) 0px -111px 56px 5px inset;
     overflow: hidden;
     border: 1px dashed wheat;
     display: table;
@@ -52,22 +68,69 @@
     margin-bottom: 1rem;
 }
 
+.personaType {
+    margin-bottom: -1.5rem;
+    border-radius: 9%;
+    font-weight: bolder;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-size: larger;
+}
+
 .row {
-    border: 1px solid gray;
     display: table;
     border-spacing: 20px;
+    transform: scale(.5);
+    transform-origin: top left;
 }
 
 .item {
-    background: rgba(0, 0, 0, 0.1);
     display: table-cell;
     flex: 1;
 }
 
-.description {
+
+.main {
+    width: 75%;
+}
+
+.sidebar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+    border: 3px solid wheat;
+    height: 100%;
+}
+
+.details {
+    display: none;
+    padding: 20px;
+    position: absolute;
+    right: -549px;
+    top: 0px;
+    width: 500px;
+    box-shadow: -17px 0px 20px 0px #0000003d;
+    border: 5px outset;
+    text-align-last: start;
+}
+
+.strengths, .weaknesses {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
     text-align: left;
+    flex: 1;
+    line-height: 1.1rem;
 }
 
-.name h4 {
-
+.strengths h3, .weaknesses h3 {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    text-align: left;
+    flex: 1;
+    margin: 0;
+    font-weight: bolder;
 }
+

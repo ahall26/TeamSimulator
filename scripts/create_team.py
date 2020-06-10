@@ -4,7 +4,7 @@ from random import Random
 from faker import Faker
 
 
-def create_team(num=1, team_size=Random().randint(3, 10), company=Faker().last_name(), team_name=None):
+def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Faker().last_name(), team_name=None):
     def get_personality():
         return Faker().random_elements(elements=OrderedDict([
             ("ISFJ", 13.8)

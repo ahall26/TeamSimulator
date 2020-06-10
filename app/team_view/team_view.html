@@ -1,58 +1,77 @@
-<div ng-app="myApp.team_view">
-    <h4>Create a Team</h4>
-    <p><strong>Name: </strong>{{ myData.team.team_name }}</p>
-    <p><strong>Company: </strong>{{ myData.team.team_company }}</p>
-    <p><strong>Size: </strong>{{ myData.team.team_size }}</p>
-    <p><strong>Role: </strong>{{ myData.team.team_role }}</p>
-    <strong>Members: </strong>
-    <div class="row" style="display: flex;">
-        <div class="item" ng-repeat="mem in myData.team.team_members">
-            <div class="profCard" style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
-                <h2>{{mem.name}}</h2>
-                <img class="avatar" src={{mem.jobavatar.Source}}>
-                <div class="personaCard">
-                    <span class={{mem.mbti.Class}}></span>
-                    <p>
-                        <b>{{mem.mbti.AltName}}</b>
-                        <i>{{mem.mbti.Description}}</i>
-                    </p>
+<div ng-app="myApp.team_view" ng-init="prof=myData.team.team_members[0]">
+    <div class="main">
+        <div>
+            <h4>Create a Team</h4>
+            <p>{{prof.name}}</p>
+            <p><strong>Name: </strong>{{ myData.team.team_name }}</p>
+            <p><strong>Company: </strong>{{ myData.team.team_company }}</p>
+            <p><strong>Size: </strong>{{ myData.team.team_size }}</p>
+            <p><strong>Role: </strong>{{ myData.team.team_role }}</p>
+            <strong>Members: </strong>
+            <div class="row" style="display: flex;">
+                <div class="item" ng-mouseover="prof = mem" ng-repeat="mem in myData.team.team_members">
+                    <div class="profCard" style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
+                        <h2>{{mem.name}}</h2>
+                        <img class="avatar" src={{mem.jobavatar.Source}}>
+                        <h3 class="personaType"
+                            style="color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}};">
+                            {{mem.mbti.ID}}</h3>
+                        <div class="personaCard">
+                            <span class={{mem.mbti.Class}}></span>
+                            <p>
+                                <b>{{mem.mbti.AltName}}</b>
+                                <i>{{mem.mbti.Description}}</i>
+                            </p>
+                        </div>
+                        <table class="description">
+                            <tr>
+                                <td>Personality:</td>
+                                <td>{{mem.personality}}</td>
+                            </tr>
+                            <tr>
+                                <td>Age:</td>
+                                <td>{{mem.age}}</td>
+                            </tr>
+                            <tr>
+                                <td>Ethnicity:</td>
+                                <td>{{mem.ethnicity}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender:</td>
+                                <td>{{mem.gender}}</td>
+                            </tr>
+                            <tr>
+                                <td>Happiness:</td>
+                                <td>{{mem.happiness}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status:</td>
+                                <td>{{mem.status}}</td>
+                            </tr>
+                            <tr>
+                                <td>Title:</td>
+                                <td>{{mem.title + ' ' + mem.level}}</td>
+                            </tr>
+                        </table>
+                        <div class="details"
+                             style="border-color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}}; color: {{mem.mbti.BGColor}}">
+                            <div class="strengths">
+                                <h3>Strengths</h3>
+                                <ul ng-repeat="s in mem.mbti.Strengths">
+                                    <li>{{s}}</li>
+                                </ul>
+                            </div>
+                            <div class="weaknesses">
+                                <h3>Weaknesses</h3>
+                                <ul ng-repeat="w in mem.mbti.Weaknesses">
+                                    <li>{{w}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <table class="description">
-                    <tr>
-                        <td>Personality:</td>
-                        <td>{{mem.personality}}</td>
-                    </tr>
-                    <tr>
-                        <td>Age:</td>
-                        <td>{{mem.age}}</td>
-                    </tr>
-                    <tr>
-                        <td>Ethnicity:</td>
-                        <td>{{mem.ethnicity}}</td>
-                    </tr>
-                    <tr>
-                        <td>Gender:</td>
-                        <td>{{mem.gender}}</td>
-                    </tr>
-                    <tr>
-                        <td>Ethnicity:</td>
-                        <td>{{mem.ethnicity}}</td>
-                    </tr>
-                    <tr>
-                        <td>Happiness:</td>
-                        <td>{{mem.happiness}}</td>
-                    </tr>
-                    <tr>
-                        <td>Status:</td>
-                        <td>{{mem.status}}</td>
-                    </tr>
-                    <tr>
-                        <td>Title:</td>
-                        <td>{{mem.title + ' ' + mem.level}}</td>
-                    </tr>
-                </table>
-
             </div>
         </div>
     </div>
 </div>
+
