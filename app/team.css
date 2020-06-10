@@ -15,18 +15,27 @@ body {
     line-height: 1rem;
 }
 
-.createTeam input {
+.createTeam input, select {
     background: inherit;
     color: inherit;
     border: inherit;
-    border-bottom: .02rem solid #bac9c7f2;
     padding-left: .5rem;
+}
+
+.createTeam input:hover, select:hover {
+    border-bottom: .02rem solid #bac9c7f2;
 }
 
 .createTeam input:focus {
     text-align: center;
 }
 
+.memContainer {
+    box-shadow: inset -11px 4px 8px #00000082;
+    background-color: rgba(0, 0, 0, 0.15);
+    min-width: 740px;
+    padding: 2rem;
+}
 
 .avatar {
     background: #9e9e9e61;
@@ -123,17 +132,7 @@ td {
 }
 
 .main {
-    width: 75%;
-    margin-left: 3rem;
-}
-
-.sidebar {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 25%;
-    border: 3px solid wheat;
-    height: 100%;
+    padding: 3rem;
 }
 
 .details {
@@ -146,6 +145,10 @@ td {
     box-shadow: -17px 0px 20px 0px #0000003d;
     border: 5px outset;
     text-align-last: start;
+}
+
+.item:last-child .details {
+    left: -549px;
 }
 
 .strengths, .weaknesses {
@@ -174,7 +177,7 @@ td {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #212529;
 }
 
 /* Handle */
