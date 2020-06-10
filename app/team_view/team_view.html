@@ -3,8 +3,8 @@
         <h2 class="title">Create a Team</h2>
         <div class="con">
             <div class="teamMain">
-                <div class="createTeam">
-                    <table>
+                <div class="createTeam" style="display: flex">
+                    <table style="width: 33%">
                         <tr>
                             <td><strong>Name: </strong></td>
                             <td><input ng-model="myData.team.team_name" value="{{myData.team.team_name}}"></input></td>
@@ -21,11 +21,17 @@
                             <td><strong>Role: </strong></td>
                             <td>
                                 <select>
-                                    <option ng-repeat="role in roles">{{role}}</option>
+                                    <option ng-repeat="role in roles" selected="{{myData.team.role}}">{{role}}</option>
                                 </select>
                             </td>
                         </tr>
                     </table>
+                    <div style="width: 33%; text-align: center; ">
+                        <h5>Compatibility</h5>
+                        <h5 style="margin: 0;font-size: 4rem;">{{myData.team.team_percentage}}</h5>
+                    </div>
+                    <div style="width: 33%; line-height: 2rem; text-align: center;">
+                    </div>
                 </div>
             </div>
             <h4 class="teamName" ng-bind="myData.team.team_name"></h4>

@@ -112,6 +112,7 @@ td {
     display: table;
     margin-top: 1.5rem;
     margin-bottom: 2rem;
+    padding: 1rem;
 }
 
 .personaCard span {
