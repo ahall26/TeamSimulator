@@ -1,9 +1,9 @@
 <div ng-app="myApp.team_view">
     <div class="main">
+        <h2 class="title">Create a Team</h2>
         <div class="con">
             <div class="teamMain">
                 <div class="createTeam">
-                    <h4>Create a Team</h4>
                     <table>
                         <tr>
                             <td><strong>Name: </strong></td>
@@ -28,14 +28,15 @@
                     </table>
                 </div>
             </div>
-            <strong>Your Team: </strong><span ng-bind="myData.team.team_name"></span>
+            <h4 class="teamName" ng-bind="myData.team.team_name"></h4>
             <br>
             <div class="memContainer">
-                <div class="row" style="display: flex;">
+                <div class="scale">
                     <div class="item" ng-repeat="mem in myData.team.team_members">
                         <div class="profCard"
                              style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
                             <h2>{{mem.name}}</h2>
+                            <h5 style="margin-top: -1rem">{{mem.title + ' ' + mem.level}}</h5>
                             <img class="avatar" src={{mem.jobavatar.Source}}>
                             <h3 class="personaType"
                                 style="color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}};">

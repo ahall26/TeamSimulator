@@ -26,7 +26,7 @@ angular.module('myApp.team_view', ['ngRoute'])
     // });
 
     .controller('TeamViewCtrl', function ($scope, $http) {
-        $http({url: "http://localhost:8080/", method: "GET"}).then(function (response) {
+        $http({url: "http://localhost:8080/?team_size=6", method: "GET"}).then(function (response) {
             $scope.myData = JSON.parse(response.data);
         }).then(function () {
             console.log($scope.myData);

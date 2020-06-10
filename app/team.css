@@ -4,6 +4,13 @@ body {
     font-family: Poppins, sans-serif;
 }
 
+.title {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-shadow: -4px 4px 3px black;
+}
+
 .teamMain {
     background-color: #27293d;
     margin-bottom: 2rem;
@@ -17,7 +24,7 @@ body {
 
 .createTeam input, select {
     background: inherit;
-    color: inherit;
+    color: #999;
     border: inherit;
     padding-left: .5rem;
 }
@@ -34,7 +41,10 @@ body {
     box-shadow: inset -11px 4px 8px #00000082;
     background-color: rgba(0, 0, 0, 0.15);
     min-width: 740px;
-    padding: 2rem;
+    padding: 1rem;
+    max-height: 29rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .avatar {
@@ -46,6 +56,19 @@ body {
     max-width: 240px;
 }
 
+.teamName {
+    text-align: center;
+    margin-bottom: 0;
+    font-weight: lighter;
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+.scale {
+    transform: scale(.5);
+    transform-origin: top left;
+}
 
 .profCard {
     font-weight: bold;
@@ -122,7 +145,6 @@ td {
 .row {
     display: table;
     border-spacing: 20px;
-    transform: scale(.5);
     transform-origin: top left;
 }
 
@@ -133,6 +155,7 @@ td {
 
 .main {
     padding: 3rem;
+    padding-top: 1rem;
 }
 
 .details {
@@ -173,31 +196,40 @@ td {
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
+    display: none;
+
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
     background: #212529;
+    display: none;
+
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #888;
+    display: none;
+
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+    display: none;
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: button;
+    -webkit-appearance: none;
     margin: 0;
+    background-color: #212529;
+    color: #212529;
 }
 
 /* Firefox */
 input[type=number] {
-    -moz-appearance: button;
+    -moz-appearance: none;
 }
