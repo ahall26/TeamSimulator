@@ -1,5 +1,11 @@
-# `angular-seed` — the seed for AngularJS apps
+E# `Team Simulator` — using logic and emotion to improve teamwork and synergy
 
+## Team Simulator
+Created with a Python Backend and AngularJS front end.
+![Team Simulator Interface](https://raw.githubusercontent.com/ahall26/TeamSimulator/master/team_sim.png?token=AF376NXWYJRJUSLXFNDJK6264JXQI
+)
+
+##Angular Seed Info
 This project is an application skeleton for a typical [AngularJS][angularjs] web app. You can use it
 to quickly bootstrap your angular webapp projects and dev environment for these projects.
 
@@ -7,7 +13,6 @@ The seed contains a sample AngularJS application and is preconfigured to install
 framework and a bunch of development and testing tools for instant web development gratification.
 
 The seed app doesn't do much, just shows how to wire two controllers and views together.
-
 
 ## Getting Started
 
