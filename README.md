@@ -2,10 +2,9 @@ E# `Team Simulator` — using logic and emotion to improve teamwork and synergy
 
 ## Team Simulator
 Created with a Python Backend and AngularJS front end.
-![Team Simulator Interface](https://raw.githubusercontent.com/ahall26/TeamSimulator/master/team_sim.png?token=AF376NXWYJRJUSLXFNDJK6264JXQI
-)
+![Team Simulator Interface](https://github.com/ahall26/TeamSimulator/blob/master/team_sim.png)
 
-##Angular Seed Info
+## Angular Seed Info
 This project is an application skeleton for a typical [AngularJS][angularjs] web app. You can use it
 to quickly bootstrap your angular webapp projects and dev environment for these projects.
 
