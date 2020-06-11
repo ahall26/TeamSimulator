@@ -1,4 +1,4 @@
-E# `Team Simulator` — using logic and emotion to improve teamwork and synergy
+# `Team Simulator` — using logic and emotion to improve teamwork and synergy
 
 ## Team Simulator
 Created with a Python Backend and AngularJS front end.
