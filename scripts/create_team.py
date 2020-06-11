@@ -3277,7 +3277,7 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
 
     team = {}
 
-    if team_name is "": team_name = f'Team {Faker().safe_color_name().capitalize()} {Faker().word().capitalize()}'
+    if team_name is "": team_name = f'Team {Faker().word().capitalize()} {Faker().safe_color_name().capitalize()}'
     ratings = []
     if team_company is "": team_company = Faker().last_name()
     for _ in range(num):
