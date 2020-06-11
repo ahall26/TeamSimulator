@@ -1,6 +1,6 @@
 # `Team Simulator` — using logic and emotion to improve teamwork and synergy
 
-## Team Simulator
+## Overview
 Created with a Python Backend and AngularJS front end.
 
 ![Team Simulator Interface](https://github.com/ahall26/TeamSimulator/blob/master/team_sim.png)
