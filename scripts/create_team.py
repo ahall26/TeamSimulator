@@ -3363,7 +3363,8 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
 
         team = {
             "team_name": team_name,
-            "team_company": f"{team_company} {member['jobavatar']['Location']}",
+            "team_company": team_company,
+            "team_location": member['jobavatar']['Location'],
             "team_role": job.title(),
             "team_size": team_size,
             "team_percentage": '{:,.0f}%'.format(team_percentage),
@@ -3374,8 +3375,6 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
             "team_members": team_members,
         }
 
-        ratings.append(team['team_percentage'])
-        # team_json = json.dumps(team, indent=2, sort_keys=False)
     return team
 
 

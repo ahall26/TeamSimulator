@@ -15,7 +15,7 @@
                         <tr>
                             <td><strong>Size: </strong></td>
                             <td><input max="15" min="1"
-                                       ng-change="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)"
+                                       ng-blur="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)"
                                        ng-model="myData.team.team_size"
                                        type="number"
                                        value="{{ myData.team.team_size }}">

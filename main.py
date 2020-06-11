@@ -41,7 +41,7 @@ headers = {"Access-Control-Allow-Origin": "*"}
 
 
 @app.get("/")
-async def generate_team(team_size: int = 2, team_role: str = "", team_company: str = "", team_name: str = ""):
+async def generate_team(team_size: int = 3, team_role: str = "", team_company: str = "", team_name: str = ""):
     team = json.dumps(
         {"team": create_team(team_size=team_size, team_role=team_role, team_name=team_name, team_company=team_company)})
     return JSONResponse(content=team, headers=headers)
