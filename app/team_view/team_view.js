@@ -8,33 +8,24 @@ angular.module('myApp.team_view', ['ngRoute'])
             controller: 'TeamViewCtrl'
         });
     }])
-    //
-    // .controller('TeamViewCtrl', function ($scope, $http) {
-    //     $http({
-    //         method: "GET",
-    //         url: "http://localhost:8080"
-    //     }).then(function (response) {
-    //         $scope.myData = JSON.parse(response.data);
-    //     }).then(
-    //         $http({
-    //             method: "GET",
-    //             url: "http://localhost:8080/roles"
-    //         }).then(function (response) {
-    //             console.log($scope.roles)
-    //             $scope.roles = JSON.parse(response.data);
-    //         }));
-    // });
 
     .controller('TeamViewCtrl', function ($scope, $http) {
-        $http({url: "http://localhost:8080/", method: "GET"}).then(function (response) {
-            $scope.myData = JSON.parse(response.data);
-        }).then(function () {
-            console.log($scope.myData);
-        }).then(function () {
-            $http({url: "http://localhost:8080/roles", method: "GET"}).then(function (response) {
-                $scope.roles = response.data;
+            $http({url: "http://localhost:8080/", method: "GET"}).then(function (response) {
+                $scope.myData = JSON.parse(response.data);
             }).then(function () {
-                console.log($scope.roles);
+                $http({url: "http://localhost:8080/roles", method: "GET"}).then(function (response) {
+                    $scope.roles = response.data;
+                })
             })
-        })
-    });
+
+            $scope.updateTeam = function (team_size, team_name, team_role, team_company) {
+                console.log(team_size, team_name, team_role, team_company);
+                var fullURL = encodeURI(`http://localhost:8080/?team_size=${team_size}&team_name=${team_name}&team_role=${team_role}&team_company=${team_company}`)
+                $http({url: fullURL, method: "GET"}).then(function (response) {
+                    $scope.myData = JSON.parse(response.data);
+                })
+            };
+        }
+    )
+
+

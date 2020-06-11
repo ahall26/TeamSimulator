@@ -1,10 +1,13 @@
 from collections import OrderedDict
 from random import Random
+from urllib.parse import unquote
 
 from faker import Faker
 
 
-def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Faker().last_name(), team_name=None):
+def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=3, max=10),
+                team_company=Faker().last_name(),
+                team_name=""):
     def get_personality():
         return Faker().random_elements(elements=OrderedDict([
             ("ISFJ", 13.8)
@@ -2460,88 +2463,34 @@ def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Fake
         }
     }
 
-    job_titles = {
-        "Accountant": "Office Worker",
-        "Actor": "Actor",
-        "Administrator": "Technologist",
-        "Artist": "Artist",
-        "Athletic coach": "Teacher",
-        "Banker": "Technologist",
-        "Bookkeeper": "Teacher",
-        "Business analyst": "Office Worker",
-        "Business manager": "Office Worker",
-        "Carpentry": "Mechanic",
-        "Chef": "Cook",
-        "Child care provider": "Childcare",
-        "Childcare": "Childcare",
-        "Company CEO or manager": "Office Worker",
-        "Composer or musician": "Singer",
-        "Computer programming": "Technologist",
-        "Computer support technician": "Technologist",
-        "Counseling": "Counselor",
-        "Counselor": "Counselor",
-        "Dentist": "Health Worker",
-        "Designer": "Artist",
-        "Detectives": "Detective",
-        "Doctor": "Health Worker",
-        "Electrician": "Mechanic",
-        "Engineer": "Factory Worker",
-        "Engineering": "Factory Worker",
-        "Entrepreneur": "Office Worker",
-        "Fashion designer": "Artist",
-        "Firefighter": "Firefighter",
-        "Forensic science": "Scientist",
-        "Forest ranger": "Police Officer",
-        "Graphic Designer": "Office Worker",
-        "Human resources manager": "Office Worker",
-        "Human resources specialist": "Office Worker",
-        "Inventor": "Scientist",
-        "Journalist": "Detective",
-        "Judge": "Judge",
-        "Law enforcement": "Police Officer",
-        "Lawyer": "Office Worker",
-        "Librarian": "Teacher",
-        "Manager": "Office Worker",
-        "Marketer": "Office Worker",
-        "Mathematician": "Teacher",
-        "Mechanics": "Mechanic",
-        "Military": "Pilot",
-        "Musician": "Singer",
-        "Naturalist": "Farmer",
-        "Nurse": "Health Worker",
-        "Nursing": "Health Worker",
-        "Nutritionist": "Health Worker",
-        "Office Manager": "Office Worker",
-        "Paralegal": "Office Worker",
-        "Paramedic": "Health Worker",
-        "Pediatrician": "Health Worker",
-        "Photographer": "Detective",
-        "Physical Therapist": "Health Worker",
-        "Physician": "Health Worker",
-        "Pilot": "Pilot",
-        "Police officer": "Police Officer",
-        "Police officers": "Police Officer",
-        "Politician": "Office Worker",
-        "Psychiatrist": "Health Worker",
-        "Psychologist": "Health Worker",
-        "Receptionist": "Technologist",
-        "Religious worker": "Pilot",
-        "Sales agent": "Office Worker",
-        "Sales representative": "Office Worker",
-        "School administrator": "Teacher",
-        "Scientist": "Scientist",
-        "Social work": "Teacher",
-        "Social Worker": "Teacher",
-        "Software developer": "Technologist",
-        "Software engineer": "Technologist",
-        "Teacher": "Teacher",
-        "Teaching": "Teacher",
-        "TV Anchor/Reporter": "Office Worker",
-        "University professor": "Teacher",
-        "Veterinarian": "Health Worker",
-        "Video game designer": "Technologist",
-        "Writer": "Technologist"
-    }
+    job_titles = {"Accountant": "Office Worker", "Actor": "Actor", "Administrator": "Technologist", "Artist": "Artist",
+                  "Athletic Coach": "Teacher", "Banker": "Technologist", "Bookkeeper": "Teacher",
+                  "Business Analyst": "Office Worker", "Business Manager": "Office Worker", "Carpentry": "Mechanic",
+                  "Chef": "Cook", "Child Care Provider": "Childcare", "Childcare": "Childcare",
+                  "Company Ceo Or Manager": "Office Worker", "Composer Or Musician": "Singer",
+                  "Computer Programming": "Technologist", "Computer Support Technician": "Technologist",
+                  "Counseling": "Counselor", "Counselor": "Counselor", "Dentist": "Health Worker", "Designer": "Artist",
+                  "Detectives": "Detective", "Doctor": "Health Worker", "Electrician": "Mechanic",
+                  "Engineer": "Factory Worker", "Engineering": "Factory Worker", "Entrepreneur": "Office Worker",
+                  "Fashion Designer": "Artist", "Firefighter": "Firefighter", "Forensic Science": "Scientist",
+                  "Forest Ranger": "Police Officer", "Graphic Designer": "Office Worker",
+                  "Human Resources Manager": "Office Worker", "Human Resources Specialist": "Office Worker",
+                  "Inventor": "Scientist", "Journalist": "Detective", "Judge": "Judge",
+                  "Law Enforcement": "Police Officer", "Lawyer": "Office Worker", "Librarian": "Teacher",
+                  "Manager": "Office Worker", "Marketer": "Office Worker", "Mathematician": "Teacher",
+                  "Mechanics": "Mechanic", "Military": "Pilot", "Musician": "Singer", "Naturalist": "Farmer",
+                  "Nurse": "Health Worker", "Nursing": "Health Worker", "Nutritionist": "Health Worker",
+                  "Office Manager": "Office Worker", "Paralegal": "Office Worker", "Paramedic": "Health Worker",
+                  "Pediatrician": "Health Worker", "Photographer": "Detective", "Physical Therapist": "Health Worker",
+                  "Physician": "Health Worker", "Pilot": "Pilot", "Police Officer": "Police Officer",
+                  "Police Officers": "Police Officer", "Politician": "Office Worker", "Psychiatrist": "Health Worker",
+                  "Psychologist": "Health Worker", "Receptionist": "Technologist", "Religious Worker": "Pilot",
+                  "Sales Agent": "Office Worker", "Sales Representative": "Office Worker",
+                  "School Administrator": "Teacher", "Scientist": "Scientist", "Social Work": "Teacher",
+                  "Social Worker": "Teacher", "Software Developer": "Technologist", "Software Engineer": "Technologist",
+                  "Teacher": "Teacher", "Teaching": "Teacher", "Tv Anchor/Reporter": "Office Worker",
+                  "University Professor": "Teacher", "Veterinarian": "Health Worker",
+                  "Video Game Designer": "Technologist", "Writer": "Technologist"}
 
     personality_types = {
         "INTJ": {"Type": ["Introversion", "Intuition", "Thinking", "Judging"], "Name": "The Architect",
@@ -3328,12 +3277,16 @@ def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Fake
 
     team = {}
 
-    if team_name is None: team_name = f'Team {Faker().word().capitalize()} {Faker().safe_color_name().capitalize()}'
+    if team_name is "": team_name = f'Team {Faker().word().capitalize()} {Faker().safe_color_name().capitalize()}'
     ratings = []
     for _ in range(num):
         total = 0
         key = Faker().random.randint(0, len(list(job_titles)) - 1)
-        job, occupation = list(job_titles.items())[key]
+        team_role = unquote(team_role)
+        if team_role is "":
+            job, occupation = list(job_titles.items())[key]
+        else:
+            job, occupation = team_role, job_titles[team_role]
         team_members = []
         team_compatibility = []
         team_combo = []
@@ -3410,7 +3363,7 @@ def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Fake
 
         team = {
             "team_name": team_name,
-            "team_company": f"{company} {member['jobavatar']['Location']}",
+            "team_company": f"{team_company} {member['jobavatar']['Location']}",
             "team_role": job.title(),
             "team_size": team_size,
             "team_percentage": '{:,.0f}%'.format(team_percentage),
@@ -3427,5 +3380,5 @@ def create_team(num=1, team_size=Faker().random_int(min=3, max=10), company=Fake
 
 
 class Team:
-    def get_team(self, team_size=3):
-        return create_team(team_size=team_size)
+    def get_team(self, team_size=3, team_name="", team_company="", team_role=""):
+        return create_team(team_size=team_size, team_role=team_role, team_name=team_name, team_company=team_company)

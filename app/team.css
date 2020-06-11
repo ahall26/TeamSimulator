@@ -5,7 +5,6 @@ body {
 }
 
 .title {
-    text-transform: uppercase;
     margin-top: 0;
     margin-bottom: 5px;
     text-shadow: -4px 4px 3px black;
@@ -67,7 +66,7 @@ body {
 
 .scale {
     transform: scale(.5);
-    transform-origin: top left;
+    transform-origin: top;
 }
 
 .profCard {
@@ -84,10 +83,6 @@ body {
 
 .profCard:hover {
     transform: scale(1.1);
-}
-
-td {
-    padding: 5px;
 }
 
 .description {
