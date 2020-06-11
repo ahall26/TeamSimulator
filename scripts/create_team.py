@@ -3360,8 +3360,15 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
                 if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
                 if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
 
-        team_percentage = (total / (member_max_points * team_size) * 100)
+        team_percentage = int('{:,.0f}'.format((total / (member_max_points * team_size) * 100)))
         team_max_points = member_max_points * team_size
+        team_compatibility_color = ""
+        if 0 <= team_percentage <= 33:
+            team_compatibility_color = "#f44336"
+        elif 34 <= team_percentage <= 66:
+            team_compatibility_color = "#ffeb3b"
+        else:
+            team_compatibility_color = "#8BC34A"
 
         team = {
             "team_name": team_name,
@@ -3369,11 +3376,12 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
             "team_location": member['jobavatar']['Location'],
             "team_role": job.title(),
             "team_size": team_size,
-            "team_percentage": '{:,.0f}%'.format(team_percentage),
+            "team_percentage": int('{:,.0f}'.format(team_percentage)),
             "team_points": total,
             "team_max_points": team_max_points,
             "team_combos": sorted(team_combo),
             "team_compatibility": team_compatibility,
+            "team_compatibility_color": team_compatibility_color,
             "team_members": team_members,
         }
 
