@@ -3277,8 +3277,9 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
 
     team = {}
 
-    if team_name is "": team_name = f'Team {Faker().word().capitalize()} {Faker().safe_color_name().capitalize()}'
+    if team_name is "": team_name = f'Team {Faker().safe_color_name().capitalize()} {Faker().word().capitalize()}'
     ratings = []
+    if team_company is "": team_company = Faker().last_name()
     for _ in range(num):
         total = 0
         key = Faker().random.randint(0, len(list(job_titles)) - 1)
@@ -3356,7 +3357,8 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
                     ctotal += personality_comp[key1]
                     total += personality_comp[key1]
                 member1['happiness'] = int('{:,.0f}'.format(((ctotal / member_max_points) * 100)))
-                if member1['favorite_color'] == member2['favorite_color']: pass
+                if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
+                if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
 
         team_percentage = (total / (member_max_points * team_size) * 100)
         team_max_points = member_max_points * team_size
