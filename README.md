@@ -5,7 +5,7 @@ Created with a Python Backend and AngularJS front end.
 
 ## Quick start
 At the root project level run 
-### To start Fast API backend start Uvicorn 
+### To start Fast API backend run Uvicorn 
 ```
 uvicorn main:app --reload
 ```
