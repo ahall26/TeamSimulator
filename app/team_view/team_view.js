@@ -10,8 +10,10 @@ angular.module('myApp.team_view', ['ngRoute'])
     }])
 
     .controller('TeamViewCtrl', function ($scope, $http) {
+            $scope.loading = $http;
             $http({url: "http://localhost:8080/", method: "GET"}).then(function (response) {
                 $scope.myData = JSON.parse(response.data);
+
             }).then(function () {
                 $http({url: "http://localhost:8080/roles", method: "GET"}).then(function (response) {
                     $scope.roles = response.data;
@@ -19,12 +21,18 @@ angular.module('myApp.team_view', ['ngRoute'])
             })
 
             $scope.updateTeam = function (team_size, team_name, team_role, team_company) {
-                console.log(team_size, team_name, team_role, team_company);
-                var fullURL = encodeURI(`http://localhost:8080/?team_size=${team_size}&team_name=${team_name}&team_role=${team_role}&team_company=${team_company}`)
+                let fullURL = encodeURI(`http://localhost:8080/?team_size=${team_size}&team_name=${team_name}&team_role=${team_role}&team_company=${team_company}`)
                 $http({url: fullURL, method: "GET"}).then(function (response) {
                     $scope.myData = JSON.parse(response.data);
                 })
-            };
+            }
+
+            $scope.randomTeam = function () {
+                let fullURL = encodeURI(`http://localhost:8080/?team_size=${Math.floor(Math.random() * (15 - 3 + 1)) + 3}`)
+                $http({url: fullURL, method: "GET"}).then(function (response) {
+                    $scope.myData = JSON.parse(response.data);
+                })
+            }
         }
     )
 

@@ -64,6 +64,23 @@ body {
     margin-top: 0;
 }
 
+button {
+    border: none;
+    box-shadow: 0 5px 5px 2px #00000078;
+    margin: 1rem;
+}
+
+button:hover {
+    box-shadow: 0 10px 5px 2px #00000078;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 1px 1px #00000078;
+
+}
+
 .scale {
     transform: scale(.5);
     transform-origin: top;
@@ -166,6 +183,20 @@ body {
     text-align-last: start;
 }
 
+.animate-if.ng-enter, .animate-if.ng-leave {
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
 .item:last-child .details {
     left: -549px;
 }
@@ -229,3 +260,59 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: none;
 }
+
+.dark {
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.loader {
+    border: 16px solid rgba(0, 0, 0, 0.22);
+    border-radius: 15rem;
+    border-top: 16px solid #212529;
+    border-bottom: 16px solid #212529;
+    width: 15rem;
+    height: 15rem;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s cubic-bezier(0.6, -0.28, 0.74, 0.05) infinite;
+    box-shadow: 0px 0px 4px 4px black;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+

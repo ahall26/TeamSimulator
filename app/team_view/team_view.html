@@ -39,13 +39,22 @@
                         <h5 style="margin: 0;font-size: 4rem; color: {{myData.team.team_compatibility_color}}">
                             {{myData.team.team_percentage + "%"}}</h5>
                     </div>
-                    <div style="width: 33%; line-height: 2rem; text-align: center;">
+                    <div style="align-self: flex-end; width: 33%; line-height: 2rem; text-align: center;">
+                        <button ng-click="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)">
+                            Regenerate Team
+                        </button>
+                        <button ng-click="randomTeam()">Random Team</button>
                     </div>
                 </div>
             </div>
             <h4 class="teamName" ng-bind="myData.team.team_name"></h4>
-            <br>
             <div class="memContainer">
+                <span class="dark" ng-if="!(loading.pendingRequests.length === 0)">
+                    <span class="text">
+                        <span class="text">Loading..</span>
+                    <div class="loader"></div>
+                    </span>
+                </span>
                 <div class="scale">
                     <div class="item" ng-repeat="mem in myData.team.team_members">
                         <div class="profCard"
