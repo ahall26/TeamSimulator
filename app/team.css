@@ -279,8 +279,9 @@ input[type=number] {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 50px;
-    color: white;
+    font-size: 8rem;
+    color: #33691E;
+    text-shadow: 3px -3px 0px #212529;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
 }
