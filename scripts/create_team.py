@@ -6,8 +6,7 @@ from faker import Faker
 
 
 def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=3, max=10),
-                team_company=Faker().last_name(),
-                team_name=""):
+                team_company=Faker().last_name(), team_name=""):
     def get_personality():
         return Faker().random_elements(elements=OrderedDict([
             ("ISFJ", 13.8)
@@ -57,12 +56,123 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
         return group
 
     def get_job():
-        member['jobavatar'] = jobs[f"{member['gender']}:{member['skin_tone']}:{occupation}"]
+        member['jobavatar'] = Team.jobs[f"{member['gender']}:{member['skin_tone']}:{occupation}"]
         member_sum = int(member['jobavatar']['SalaryMax']) - int(member['jobavatar']['SalaryMin'])
         range_low = int(member['jobavatar']['SalaryMin']) + ((level - 1) * .25) * member_sum
         range_high = int(member['jobavatar']['SalaryMin']) + (level * .25) * member_sum
         member['salary'] = '${:,.2f}'.format(Random().randrange(range_low, range_high)) + "/yr"
 
+    team = {}
+
+    if team_name is "": team_name = f'Team {Faker().word().capitalize()} {Faker().safe_color_name().capitalize()}'
+    if team_company is "": team_company = Faker().last_name()
+    for _ in range(num):
+        total = 0
+        key = Faker().random.randint(0, len(list(Team.job_titles)) - 1)
+        team_role = unquote(team_role)
+        if team_role is "":
+            job, occupation = list(Team.job_titles.items())[key]
+        else:
+            job, occupation = team_role, Team.job_titles[team_role]
+        team_members = []
+        team_compatibility = []
+        team_combo = []
+        for _ in range(team_size):
+
+            if Random().randint(1, 2) == 1:
+                gender = 'Male'
+            else:
+                gender = 'Female'
+            if gender == 'Male':
+                name = Faker().name_male()
+            else:
+                name = Faker().name_female()
+            personality = get_personality()
+            level = Random().randint(1, 4)
+            ethnicity = get_ethnicity()
+
+            key = Faker().random.randint(0, len(list(Team.foods.items())) - 1)
+            food = list(Team.foods.items())[key]
+
+            member = {
+                "id": Faker().uuid4(),
+                "name": name,
+                "gender": gender,
+                "title": occupation.title(),
+                "level": level,
+                "salary": 0,
+                "age": Random().randint(24, 50),
+                "skin_tone": ethnicity[0],
+                "ethnicity": ethnicity[1],
+                "favorite_color": Faker().safe_color_name().capitalize(),
+                "favorite_food": food,
+                "favorite_person": Team.idols[Random().randint(0, len(Team.idols) - 1)],
+                "status": get_status(),
+                "personality": personality,
+                "happiness": float(),
+                "bonuses": {
+                    "job_fit": False,
+                    "has_friend": False,
+                    "young_success": False
+                }
+            }
+
+            get_job()
+
+            if job in Team.personality_types[personality]['Careers']:
+                member['job_fit'] = True
+            if level > 2 and member['age'] < 27:
+                member['young_success'] = True
+
+            team_members.append(member)
+
+        member_max_points = (team_size - 1) * 5
+        for member1 in team_members:
+            ctotal = 0
+            member1['mbti'] = Team.personality_types[member1['personality']]
+            team_combo.append(member1['personality'])
+            for member2 in team_members:
+                if member1 == member2: continue
+                key = sorted([member1['personality'], member2['personality']])
+                key1 = f"{key[0]}:{key[1]}"
+                if key1 in Team.personality_comp:
+                    h = {key1: Team.personality_comp[key1]}
+                    if h not in team_compatibility:
+                        team_compatibility.append(h)
+                    ctotal += Team.personality_comp[key1]
+                    total += Team.personality_comp[key1]
+                member1['happiness'] = int('{:,.0f}'.format(((ctotal / member_max_points) * 100)))
+                if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
+                if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
+
+        team_percentage = int('{:,.0f}'.format((total / (member_max_points * team_size) * 100)))
+        team_max_points = member_max_points * team_size
+        if 0 <= team_percentage <= 33:
+            team_compatibility_color = {"color": "#f44336"}
+        elif 34 <= team_percentage <= 66:
+            team_compatibility_color = {"color": "#ffeb3b"}
+        else:
+            team_compatibility_color = {"color": "#8BC34A"}
+
+        team = {
+            "team_name": team_name,
+            "team_company": team_company,
+            "team_location": member['jobavatar']['Location'],
+            "team_role": job.title(),
+            "team_size": team_size,
+            "team_percentage": int('{:,.0f}'.format(team_percentage)),
+            "team_points": total,
+            "team_max_points": team_max_points,
+            "team_combos": sorted(team_combo),
+            "team_compatibility": team_compatibility,
+            "team_compatibility_color": team_compatibility_color,
+            "team_members": team_members,
+        }
+
+    return team
+
+
+class Team:
     foods = {
         "Grapes": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/grapes_1f347.png",
         "Melon": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/melon_1f348.png",
@@ -158,7 +268,8 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
         "Chocolate Bar": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/chocolate-bar_1f36b.png",
         "Candy": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/candy_1f36c.png",
         "Lollipop": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/lollipop_1f36d.png",
-        "Custard": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/custard_1f36e.png"}
+        "Custard": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/facebook/230/custard_1f36e.png"
+    }
 
     jobs = {
         "Male:light:Counselor": {
@@ -2463,34 +2574,88 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
         }
     }
 
-    job_titles = {"Accountant": "Office Worker", "Actor": "Actor", "Administrator": "Technologist", "Artist": "Artist",
-                  "Athletic Coach": "Teacher", "Banker": "Technologist", "Bookkeeper": "Teacher",
-                  "Business Analyst": "Office Worker", "Business Manager": "Office Worker", "Carpentry": "Mechanic",
-                  "Chef": "Cook", "Child Care Provider": "Childcare", "Childcare": "Childcare",
-                  "Company Ceo Or Manager": "Office Worker", "Composer Or Musician": "Singer",
-                  "Computer Programming": "Technologist", "Computer Support Technician": "Technologist",
-                  "Counseling": "Counselor", "Counselor": "Counselor", "Dentist": "Health Worker", "Designer": "Artist",
-                  "Detectives": "Detective", "Doctor": "Health Worker", "Electrician": "Mechanic",
-                  "Engineer": "Factory Worker", "Engineering": "Factory Worker", "Entrepreneur": "Office Worker",
-                  "Fashion Designer": "Artist", "Firefighter": "Firefighter", "Forensic Science": "Scientist",
-                  "Forest Ranger": "Police Officer", "Graphic Designer": "Office Worker",
-                  "Human Resources Manager": "Office Worker", "Human Resources Specialist": "Office Worker",
-                  "Inventor": "Scientist", "Journalist": "Detective", "Judge": "Judge",
-                  "Law Enforcement": "Police Officer", "Lawyer": "Office Worker", "Librarian": "Teacher",
-                  "Manager": "Office Worker", "Marketer": "Office Worker", "Mathematician": "Teacher",
-                  "Mechanics": "Mechanic", "Military": "Pilot", "Musician": "Singer", "Naturalist": "Farmer",
-                  "Nurse": "Health Worker", "Nursing": "Health Worker", "Nutritionist": "Health Worker",
-                  "Office Manager": "Office Worker", "Paralegal": "Office Worker", "Paramedic": "Health Worker",
-                  "Pediatrician": "Health Worker", "Photographer": "Detective", "Physical Therapist": "Health Worker",
-                  "Physician": "Health Worker", "Pilot": "Pilot", "Police Officer": "Police Officer",
-                  "Police Officers": "Police Officer", "Politician": "Office Worker", "Psychiatrist": "Health Worker",
-                  "Psychologist": "Health Worker", "Receptionist": "Technologist", "Religious Worker": "Pilot",
-                  "Sales Agent": "Office Worker", "Sales Representative": "Office Worker",
-                  "School Administrator": "Teacher", "Scientist": "Scientist", "Social Work": "Teacher",
-                  "Social Worker": "Teacher", "Software Developer": "Technologist", "Software Engineer": "Technologist",
-                  "Teacher": "Teacher", "Teaching": "Teacher", "Tv Anchor/Reporter": "Office Worker",
-                  "University Professor": "Teacher", "Veterinarian": "Health Worker",
-                  "Video Game Designer": "Technologist", "Writer": "Technologist"}
+    job_titles = {
+        "Accountant": "Office Worker",
+        "Actor": "Actor",
+        "Administrator": "Technologist",
+        "Artist": "Artist",
+        "Athletic Coach": "Teacher",
+        "Banker": "Technologist",
+        "Bookkeeper": "Teacher",
+        "Business Analyst": "Office Worker",
+        "Business Manager": "Office Worker",
+        "Carpentry": "Mechanic",
+        "Chef": "Cook",
+        "Child Care Provider": "Childcare",
+        "Childcare": "Childcare",
+        "Company Ceo Or Manager": "Office Worker",
+        "Composer Or Musician": "Singer",
+        "Computer Programming": "Technologist",
+        "Computer Support Technician": "Technologist",
+        "Counseling": "Counselor",
+        "Counselor": "Counselor",
+        "Dentist": "Health Worker",
+        "Designer": "Artist",
+        "Detectives": "Detective",
+        "Doctor": "Health Worker",
+        "Electrician": "Mechanic",
+        "Engineer": "Factory Worker",
+        "Engineering": "Factory Worker",
+        "Entrepreneur": "Office Worker",
+        "Fashion Designer": "Artist",
+        "Firefighter": "Firefighter",
+        "Forensic Science": "Scientist",
+        "Forest Ranger": "Police Officer",
+        "Graphic Designer": "Office Worker",
+        "Human Resources Manager": "Office Worker",
+        "Human Resources Specialist": "Office Worker",
+        "Inventor": "Scientist",
+        "Journalist": "Detective",
+        "Judge": "Judge",
+        "Law Enforcement": "Police Officer",
+        "Lawyer": "Office Worker",
+        "Librarian": "Teacher",
+        "Manager": "Office Worker",
+        "Marketer": "Office Worker",
+        "Mathematician": "Teacher",
+        "Mechanics": "Mechanic",
+        "Military": "Pilot",
+        "Musician": "Singer",
+        "Naturalist": "Farmer",
+        "Nurse": "Health Worker",
+        "Nursing": "Health Worker",
+        "Nutritionist": "Health Worker",
+        "Office Manager": "Office Worker",
+        "Paralegal": "Office Worker",
+        "Paramedic": "Health Worker",
+        "Pediatrician": "Health Worker",
+        "Photographer": "Detective",
+        "Physical Therapist": "Health Worker",
+        "Physician": "Health Worker",
+        "Pilot": "Pilot",
+        "Police Officer": "Police Officer",
+        "Police Officers": "Police Officer",
+        "Politician": "Office Worker",
+        "Psychiatrist": "Health Worker",
+        "Psychologist": "Health Worker",
+        "Receptionist": "Technologist",
+        "Religious Worker": "Pilot",
+        "Sales Agent": "Office Worker",
+        "Sales Representative": "Office Worker",
+        "School Administrator": "Teacher",
+        "Scientist": "Scientist",
+        "Social Work": "Teacher",
+        "Social Worker": "Teacher",
+        "Software Developer": "Technologist",
+        "Software Engineer": "Technologist",
+        "Teacher": "Teacher",
+        "Teaching": "Teacher",
+        "Tv Anchor/Reporter": "Office Worker",
+        "University Professor": "Teacher",
+        "Veterinarian": "Health Worker",
+        "Video Game Designer": "Technologist",
+        "Writer": "Technologist"
+    }
 
     personality_types = {
         "INTJ": {"Type": ["Introversion", "Intuition", "Thinking", "Judging"], "Name": "The Architect",
@@ -3242,152 +3407,300 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
         "ESTJ:ESTJ": 4
     }
 
-    idols = [['Abraham Maslow', ' Psychologist'], ['Alan Shepherd', ' Astronaut'], ['Albert Einstein', ' Scientist'],
-             ['Alec Baldwin', ' Actor'], ['Alexander The Great', ' King And Military Leader'],
-             ['Amelia Earhart', ' Aviator'], ['Andy Kaufmann', ' Comedian'],
-             ['Arnold Schwarzenegger', ' Actor & Politician'], ['Atticus Finch', ' To Kill A Mockingbird'],
-             ['Audrey Hepburn', ' Actress'], ['Auguste Rodin', ' Sculptor'], ['Barack Obama', ' U.S. President'],
-             ['Barbara Walters', ' Television Journalist'], ['Bill Clinton', ' U.S. President'],
-             ['Bill Gates', ' Microsoft Founder'], ['Billy Graham', ' Evangelist'], ['Bono', ' Musician'],
-             ['C.S. Lewis', ' Author'], ['Captain James T. Kirk', ' Fictional Character', ' Star Trek'],
-             ['Carl Jung', ' Psychoanalyst'], ['Carl Sagan', ' Astronomer'], ['Clint Eastwood', ' Actor'],
-             ['Darth Vader', ' Character From Star Wars'], ['David Beckham', ' Soccer Player'],
-             ['David Petraeus', ' U.S. Army General'], ['Donald Trump', ' Businessman And U.S. President'],
-             ['Dr. John Watson', ' Sherlock Holmes Series By Arthur Conan Doyle'], ['Dr. Seuss', " Children's Author"],
-             ['Dwight D. Eisenhower', ' U.S. President'], ['Elizabeth Bennet', ' Character In Pride And Prejudice'],
-             ['Ellen Degeneres', ' Comedian And Talk Show Host'], ['Ernest Hemingway', ' Novelist'],
-             ['Franklin D. Roosevelt', ' U.S. President'],
-             ['Fred And George Weasley', ' Fictional Characters From Harry Potter'],
-             ['Fred Rogers', ' Television Personality'], ['Gandalf', ' The Lord Of The Rings'],
-             ['Han Solo', ' Star Wars Character'], ['Harry Potter', ' Fictional Character'],
-             ['John Adams', ' U.S. President'], ['Joy', ' Film Character', ' Inside Out'], ['Jrr Tolkien', ' Author'],
-             ['Julia Child', ' Cook'], ['Kristi Yamaguchi', ' Figure Skater'], ['Lance Armstrong', ' Cyclist'],
-             ['Lex Luthor', ' Superman Character'], ['Louisa May Alcott', ' Author'],
-             ['Lyndon B. Johnson', ' U.S. President'], ['Madonna', ' Singer'], ['Marilyn Monroe', ' Actress'],
-             ['Mark Cuban', ' Entrepreneur'], ['Martin Luther King', ' Jr.', ' Civil Rights Leader'],
-             ['Megyn Kelly', ' Television Personality'], ['Mother Teresa', ' Nun And Humanitarian'],
-             ['Neil Simon', ' Playwright'], ['Oprah Winfey', ' Television Personality'], ['Pablo Picasso', ' Artist'],
-             ['Peyton Manning', ' Football Player'], ['Princess Diana', ' British Royal'],
-             ['Ron Weasley', ' Harry Potter'], ['Sally Field', ' Actress'], ['Salvador Dali', ' Artist'],
-             ['Sam Walton', ' Wal-Mart Founder'], ['Sheldon Cooper', ' The Big Bang Theory'],
-             ['Taylor Swift', ' Musician'], ['Thomas Edison', ' Inventor'], ['Thomas Jefferson', ' U.S. President'],
-             ['Tiger Woods', ' Golfer'], ['Vince Lombardi', ' Football Coach'], ['Walt Disney', ' Filmmaker'],
-             ['Will Smith', ' Actor'], ['William Mckinley', ' U.S. President'], ['William Shakespeare', ' Playwright'],
-             ['Zachary Taylor', ' U.S. President']]
-
-    team = {}
-
-    if team_name is "": team_name = f'Team {Faker().word().capitalize()} {Faker().safe_color_name().capitalize()}'
-    ratings = []
-    if team_company is "": team_company = Faker().last_name()
-    for _ in range(num):
-        total = 0
-        key = Faker().random.randint(0, len(list(job_titles)) - 1)
-        team_role = unquote(team_role)
-        if team_role is "":
-            job, occupation = list(job_titles.items())[key]
-        else:
-            job, occupation = team_role, job_titles[team_role]
-        team_members = []
-        team_compatibility = []
-        team_combo = []
-        for _ in range(team_size):
-
-            if Random().randint(1, 2) == 1:
-                gender = 'Male'
-            else:
-                gender = 'Female'
-            if gender == 'Male':
-                name = Faker().name_male()
-            else:
-                name = Faker().name_female()
-            personality = get_personality()
-            level = Random().randint(1, 4)
-            ethnicity = get_ethnicity()
-
-            key = Faker().random.randint(0, len(list(foods.items())) - 1)
-            food = list(foods.items())[key]
-
-            member = {
-                "id": Faker().uuid4(),
-                "name": name,
-                "gender": gender,
-                "title": occupation.title(),
-                "level": level,
-                "salary": 0,
-                "age": Random().randint(24, 50),
-                "skin_tone": ethnicity[0],
-                "ethnicity": ethnicity[1],
-                "favorite_color": Faker().safe_color_name().capitalize(),
-                "favorite_food": food,
-                "favorite_person": idols[Random().randint(0, len(idols) - 1)],
-                "status": get_status(),
-                "personality": personality,
-                "happiness": float(),
-                "bonuses": {
-                    "job_fit": False,
-                    "has_friend": False,
-                    "young_success": False
-                }
-            }
-
-            get_job()
-
-            if job in personality_types[personality]['Careers']:
-                member['job_fit'] = True
-            if level > 2 and member['age'] < 27:
-                member['young_success'] = True
-
-            team_members.append(member)
-
-        max_points = 5
-        member_max_points = (team_size - 1) * max_points
-        for member1 in team_members:
-            ctotal = 0
-            member1['mbti'] = personality_types[member1['personality']]
-            team_combo.append(member1['personality'])
-            for member2 in team_members:
-                if member1 == member2: continue
-                key = sorted([member1['personality'], member2['personality']])
-                key1 = f"{key[0]}:{key[1]}"
-                if key1 in personality_comp:
-                    h = {key1: personality_comp[key1]}
-                    if h not in team_compatibility:
-                        team_compatibility.append(h)
-                    ctotal += personality_comp[key1]
-                    total += personality_comp[key1]
-                member1['happiness'] = int('{:,.0f}'.format(((ctotal / member_max_points) * 100)))
-                if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
-                if team_role in member1['mbti']['Careers']: member1['bonuses']['job_fit'] = True
-
-        team_percentage = int('{:,.0f}'.format((total / (member_max_points * team_size) * 100)))
-        team_max_points = member_max_points * team_size
-        team_compatibility_color = ""
-        if 0 <= team_percentage <= 33:
-            team_compatibility_color = "#f44336"
-        elif 34 <= team_percentage <= 66:
-            team_compatibility_color = "#ffeb3b"
-        else:
-            team_compatibility_color = "#8BC34A"
-
-        team = {
-            "team_name": team_name,
-            "team_company": team_company,
-            "team_location": member['jobavatar']['Location'],
-            "team_role": job.title(),
-            "team_size": team_size,
-            "team_percentage": int('{:,.0f}'.format(team_percentage)),
-            "team_points": total,
-            "team_max_points": team_max_points,
-            "team_combos": sorted(team_combo),
-            "team_compatibility": team_compatibility,
-            "team_compatibility_color": team_compatibility_color,
-            "team_members": team_members,
-        }
-
-    return team
-
-
-class Team:
-    def get_team(self, team_size=3, team_name="", team_company="", team_role=""):
-        return create_team(team_size=team_size, team_role=team_role, team_name=team_name, team_company=team_company)
+    idols = [
+        [
+            "Abraham Maslow",
+            " Psychologist"
+        ],
+        [
+            "Alan Shepherd",
+            " Astronaut"
+        ],
+        [
+            "Albert Einstein",
+            " Scientist"
+        ],
+        [
+            "Alec Baldwin",
+            " Actor"
+        ],
+        [
+            "Alexander The Great",
+            " King And Military Leader"
+        ],
+        [
+            "Amelia Earhart",
+            " Aviator"
+        ],
+        [
+            "Andy Kaufmann",
+            " Comedian"
+        ],
+        [
+            "Arnold Schwarzenegger",
+            " Actor & Politician"
+        ],
+        [
+            "Atticus Finch",
+            " To Kill A Mockingbird"
+        ],
+        [
+            "Audrey Hepburn",
+            " Actress"
+        ],
+        [
+            "Auguste Rodin",
+            " Sculptor"
+        ],
+        [
+            "Barack Obama",
+            " U.S. President"
+        ],
+        [
+            "Barbara Walters",
+            " Television Journalist"
+        ],
+        [
+            "Bill Clinton",
+            " U.S. President"
+        ],
+        [
+            "Bill Gates",
+            " Microsoft Founder"
+        ],
+        [
+            "Billy Graham",
+            " Evangelist"
+        ],
+        [
+            "Bono",
+            " Musician"
+        ],
+        [
+            "C.S. Lewis",
+            " Author"
+        ],
+        [
+            "Captain James T. Kirk",
+            " Fictional Character",
+            " Star Trek"
+        ],
+        [
+            "Carl Jung",
+            " Psychoanalyst"
+        ],
+        [
+            "Carl Sagan",
+            " Astronomer"
+        ],
+        [
+            "Clint Eastwood",
+            " Actor"
+        ],
+        [
+            "Darth Vader",
+            " Character From Star Wars"
+        ],
+        [
+            "David Beckham",
+            " Soccer Player"
+        ],
+        [
+            "David Petraeus",
+            " U.S. Army General"
+        ],
+        [
+            "Donald Trump",
+            " Businessman And U.S. President"
+        ],
+        [
+            "Dr. John Watson",
+            " Sherlock Holmes Series By Arthur Conan Doyle"
+        ],
+        [
+            "Dr. Seuss",
+            " Children/'s Author"
+        ],
+        [
+            "Dwight D. Eisenhower",
+            " U.S. President"
+        ],
+        [
+            "Elizabeth Bennet",
+            " Character In Pride And Prejudice"
+        ],
+        [
+            "Ellen Degeneres",
+            " Comedian And Talk Show Host"
+        ],
+        [
+            "Ernest Hemingway",
+            " Novelist"
+        ],
+        [
+            "Franklin D. Roosevelt",
+            " U.S. President"
+        ],
+        [
+            "Fred And George Weasley",
+            " Fictional Characters From Harry Potter"
+        ],
+        [
+            "Fred Rogers",
+            " Television Personality"
+        ],
+        [
+            "Gandalf",
+            " The Lord Of The Rings"
+        ],
+        [
+            "Han Solo",
+            " Star Wars Character"
+        ],
+        [
+            "Harry Potter",
+            " Fictional Character"
+        ],
+        [
+            "John Adams",
+            " U.S. President"
+        ],
+        [
+            "Joy",
+            " Film Character",
+            " Inside Out"
+        ],
+        [
+            "Jrr Tolkien",
+            " Author"
+        ],
+        [
+            "Julia Child",
+            " Cook"
+        ],
+        [
+            "Kristi Yamaguchi",
+            " Figure Skater"
+        ],
+        [
+            "Lance Armstrong",
+            " Cyclist"
+        ],
+        [
+            "Lex Luthor",
+            " Superman Character"
+        ],
+        [
+            "Louisa May Alcott",
+            " Author"
+        ],
+        [
+            "Lyndon B. Johnson",
+            " U.S. President"
+        ],
+        [
+            "Madonna",
+            " Singer"
+        ],
+        [
+            "Marilyn Monroe",
+            " Actress"
+        ],
+        [
+            "Mark Cuban",
+            " Entrepreneur"
+        ],
+        [
+            "Martin Luther King",
+            " Jr.",
+            " Civil Rights Leader"
+        ],
+        [
+            "Megyn Kelly",
+            " Television Personality"
+        ],
+        [
+            "Mother Teresa",
+            " Nun And Humanitarian"
+        ],
+        [
+            "Neil Simon",
+            " Playwright"
+        ],
+        [
+            "Oprah Winfey",
+            " Television Personality"
+        ],
+        [
+            "Pablo Picasso",
+            " Artist"
+        ],
+        [
+            "Peyton Manning",
+            " Football Player"
+        ],
+        [
+            "Princess Diana",
+            " British Royal"
+        ],
+        [
+            "Ron Weasley",
+            " Harry Potter"
+        ],
+        [
+            "Sally Field",
+            " Actress"
+        ],
+        [
+            "Salvador Dali",
+            " Artist"
+        ],
+        [
+            "Sam Walton",
+            " Wal-Mart Founder"
+        ],
+        [
+            "Sheldon Cooper",
+            " The Big Bang Theory"
+        ],
+        [
+            "Taylor Swift",
+            " Musician"
+        ],
+        [
+            "Thomas Edison",
+            " Inventor"
+        ],
+        [
+            "Thomas Jefferson",
+            " U.S. President"
+        ],
+        [
+            "Tiger Woods",
+            " Golfer"
+        ],
+        [
+            "Vince Lombardi",
+            " Football Coach"
+        ],
+        [
+            "Walt Disney",
+            " Filmmaker"
+        ],
+        [
+            "Will Smith",
+            " Actor"
+        ],
+        [
+            "William Mckinley",
+            " U.S. President"
+        ],
+        [
+            "William Shakespeare",
+            " Playwright"
+        ],
+        [
+            "Zachary Taylor",
+            " U.S. President"
+        ]
+    ]

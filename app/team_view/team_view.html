@@ -36,8 +36,8 @@
                     </table>
                     <div style="width: 33%; text-align: center; ">
                         <h5>Team Compatibility</h5>
-                        <h5 style="margin: 0;font-size: 4rem; color: {{myData.team.team_compatibility_color}}">
-                            {{myData.team.team_percentage + "%"}}</h5>
+                        <h5 ng-bind="team_percentage + '%'" ng-style="team_compatibility_color"
+                            style="margin: 0;font-size: 4rem;"></h5>
                     </div>
                     <div style="align-self: flex-end; width: 33%; line-height: 2rem; text-align: center;">
                         <button ng-click="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)">
@@ -56,7 +56,7 @@
                     </span>
                 </span>
                 <div class="scale">
-                    <div class="item" ng-repeat="mem in myData.team.team_members">
+                    <div class="item" ng-repeat="mem in members">
                         <div class="profCard"
                              style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
                             <h2>{{mem.name}}</h2>
@@ -64,7 +64,13 @@
                             <img class="avatar" src={{mem.jobavatar.Source}}>
                             <h3 class="personaType"
                                 style="color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}};">
-                                {{mem.mbti.ID}}</h3>
+                                <select ng-change="updateTeamMember(mem.id,mem.personality)" ng-model="mem.personality">
+                                    <option ng-selected="selected" value="{{mem.personality}}">{{mem.personality}}
+                                    </option>
+                                    <option label="{{p.ID + ' - ' + p.AltName}}" ng-repeat="p in team_personalities"
+                                            value="{{p.ID}}"></option>
+                                </select>
+                            </h3>
                             <div class="personaCard">
                                 <span class={{mem.mbti.Class}}></span>
                                 <p>

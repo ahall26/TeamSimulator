@@ -1,2 +1,2 @@
-npm restart &&
-  uvicorn main:app --reload
+npm restart
+uvicorn main:app --reload

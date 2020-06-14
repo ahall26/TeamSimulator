@@ -21,6 +21,11 @@ body {
     line-height: 1rem;
 }
 
+.profCard select {
+    color: inherit;
+    text-align-last: center;
+}
+
 .createTeam input, select {
     background: inherit;
     color: #999;
@@ -148,10 +153,9 @@ button:active {
 
 .personaType {
     margin-bottom: -1.5rem;
-    border-radius: 9%;
     font-weight: bolder;
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 15%;
+    margin-right: 15%;
     font-size: larger;
 }
 
