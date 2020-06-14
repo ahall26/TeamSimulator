@@ -40,10 +40,11 @@
                             style="margin: 0;font-size: 4rem;"></h5>
                     </div>
                     <div style="align-self: flex-end; width: 33%; line-height: 2rem; text-align: center;">
-                        <button ng-click="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)">
+                        <button ng-click="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)"
+                                style="background-color: {{team.team_compatibility_color}}">
                             Regenerate Team
                         </button>
-                        <button ng-click="randomTeam()">Random Team</button>
+                        <button ng-click="randomTeam()" ng-style="getStyleColor">Random Team</button>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,9 @@
             <div class="memContainer">
                 <span class="dark" ng-if="!(loading.pendingRequests.length === 0)">
                     <span class="text">
-                        <div class="loader"></div>
+                        <div class="loader" style="background-color: rgba(0, 0, 0, 0.66);
+    box-shadow: 0 0 2px 2px #8bc34a;">
+                        </div>
                         <span class="text fas fa-cannabis"></span>
                     </span>
                 </span>
@@ -61,7 +64,7 @@
                              style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
                             <h2>{{mem.name}}</h2>
                             <h5 style="margin-top: -1rem">{{myData.team.team_role + ' ' + mem.level}}</h5>
-                            <img class="avatar" src={{mem.jobavatar.Source}}>
+                            <img class="avatar" src={{mem.jobavatar.Source}} style="border-color: {{mem.mbti.FTColor}}">
                             <h3 class="personaType"
                                 style="color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}};">
                                 <select ng-change="updateTeamMember(mem.id,mem.personality)" ng-model="mem.personality">
@@ -85,11 +88,15 @@
                                 </tr>
                                 <tr>
                                     <td>Age:</td>
-                                    <td>{{mem.age}}</td>
+                                    <td><input max="100" min="18" ng-model="mem.age" type="number"
+                                               value="{{mem.age}}"></td>
                                 </tr>
                                 <tr>
                                     <td>Ethnicity:</td>
-                                    <td>{{mem.ethnicity}}</td>
+                                    <td><select style="text-align-last: center;">
+                                        <option label="{{mem.ethnicity}}" selected="selected"></option>
+                                        <option ng-repeat="e in ethnicities" value="{{e}}">{{e}}</option>
+                                    </select></td>
                                 </tr>
                                 <tr>
                                     <td>Gender:</td>

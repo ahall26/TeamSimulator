@@ -2877,7 +2877,7 @@ class Team:
                  "ID": "ENFP"},
         "ISTJ": {"Type": ["Introversion", "Sensing", "Thinking", "Judging"], "Name": "Logistician",
                  "AltName": "The Inspector", "Class": "far fa-eye", "BGColor": "#70c7b8",
-                 "FTColor": "wheat",
+                 "FTColor": "#212529",
                  "Description": "Practical and fact-minded individuals, whose reliability cannot be doubted.",
                  "Dominant": "Introverted Sensing", "Auxiliary": "Extraverted Thinking",
                  "Tertiary": "Introverted Feeling", "Inferior": "Extraverted Intuition",

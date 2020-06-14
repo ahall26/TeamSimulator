@@ -1,5 +1,12 @@
 'use strict';
 
+function extracted($scope, response) {
+    $scope.myData = JSON.parse(response.data);
+    $scope.members = JSON.parse(response.data).team.team_members;
+    $scope.team_percentage = JSON.parse(response.data).team.team_percentage;
+    $scope.team_compatibility_color = JSON.parse(response.data).team.team_compatibility_color;
+}
+
 angular.module('myApp.team_view', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
@@ -12,11 +19,9 @@ angular.module('myApp.team_view', ['ngRoute'])
     .controller('TeamViewCtrl', function ($scope, $http) {
         $scope.loading = $http;
         $scope.comps = [];
+        $scope.ethnicities = ["Asian", "Pacific Islander", "Black or African American", "Hispanic or Latino", "White"];
         $http({url: "http://localhost:8080/", method: "GET"}).then(function (response) {
-            $scope.myData = JSON.parse(response.data);
-            $scope.members = JSON.parse(response.data).team.team_members;
-            $scope.team_percentage = JSON.parse(response.data).team.team_percentage;
-            $scope.team_compatibility_color = JSON.parse(response.data).team.team_compatibility_color;
+            extracted($scope, response);
             console.log($scope.members);
         }).then(function () {
             $http({url: "http://localhost:8080/roles", method: "GET"}).then(function (response) {
@@ -35,21 +40,19 @@ angular.module('myApp.team_view', ['ngRoute'])
         $scope.updateTeam = function (team_size, team_name, team_role, team_company) {
             let fullURL = encodeURI(`http://localhost:8080/?team_size=${team_size}&team_name=${team_name}&team_role=${team_role}&team_company=${team_company}`)
             $http({url: fullURL, method: "GET"}).then(function (response) {
-                $scope.myData = JSON.parse(response.data);
-                $scope.members = JSON.parse(response.data).team.team_members;
-                $scope.team_percentage = JSON.parse(response.data).team.team_percentage;
-                $scope.team_compatibility_color = JSON.parse(response.data).team.team_compatibility_color;
+                extracted($scope, response);
             })
         }
 
         $scope.randomTeam = function () {
             let fullURL = encodeURI(`http://localhost:8080/?team_size=${Math.floor(Math.random() * (15 - 3 + 1)) + 3}`)
             $http({url: fullURL, method: "GET"}).then(function (response) {
-                $scope.myData = JSON.parse(response.data);
-                $scope.members = JSON.parse(response.data).team.team_members;
-                $scope.team_percentage = JSON.parse(response.data).team.team_percentage;
-                $scope.team_compatibility_color = JSON.parse(response.data).team.team_compatibility_color;
+                extracted($scope, response);
             })
+        }
+
+        $scope.getStyleColor = function ($scope) {
+            return {'color': $scope.team_compatibility_color, 'border-color': $scope.team_compatibility_color}
         }
 
         $scope.updateTeamMember = function (id, pid) {
@@ -60,7 +63,6 @@ angular.module('myApp.team_view', ['ngRoute'])
         $scope.calculateTotal = function ($scope) {
             $scope.comps = [];
             $scope.team_total = 0;
-            console.log("MEMBERS", $scope.members)
 
             for (let mem in $scope.members) {
                 for (let mem2 in $scope.members) {
