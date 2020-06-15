@@ -41,10 +41,13 @@
                     </div>
                     <div style="align-self: flex-end; width: 33%; line-height: 2rem; text-align: center;">
                         <button ng-click="updateTeam(myData.team.team_size,myData.team.team_name,myData.team.team_role,myData.team.team_company)"
-                                style="background-color: {{team.team_compatibility_color}}">
+                                style="background-color: {{team.team_compatibility_color}}"
+                                title="Regenerate new team with the current role and team size.">
                             Regenerate Team
                         </button>
-                        <button ng-click="randomTeam()" ng-style="getStyleColor">Random Team</button>
+                        <button ng-click="randomTeam()" ng-style="getStyleColor" title="Create a random team.">Random
+                            Team
+                        </button>
                     </div>
                 </div>
             </div>
@@ -53,9 +56,9 @@
                 <span class="dark" ng-if="!(loading.pendingRequests.length === 0)">
                     <span class="text">
                         <div class="loader" style="background-color: rgba(0, 0, 0, 0.66);
-    box-shadow: 0 0 2px 2px #8bc34a;">
+    box-shadow: 0 0 2px 2px #FFD54F;">
                         </div>
-                        <span class="text fas fa-cannabis"></span>
+                        <span class="text fas fa-poo"></span>
                     </span>
                 </span>
                 <div class="scale">

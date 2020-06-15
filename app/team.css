@@ -98,7 +98,8 @@ button:active {
     font-size: 1rem;
     text-align: center;
     width: 380px;
-    padding: 2rem;
+    padding: 3rem;
+    padding-bottom: 2rem;
     margin: 1rem;
     padding-top: 2px;
     -webkit-box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
@@ -110,16 +111,17 @@ button:active {
 }
 
 .description {
+    text-align: left;
+    width: 100%;
+    display: none;
     background-color: inherit;
     color: inherit;
+    font-weight: bolder;
     font-size: medium;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    border: 0.2rem solid;
-    border-color: inherit;
-    text-align-last: center;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    text-align-last: left;
 }
-
 
 .profCard:hover .description {
     display: block;
@@ -205,7 +207,6 @@ td {
     right: -549px;
     top: 0px;
     width: 500px;
-    box-shadow: -17px 0px 20px 0px #0000003d;
     border: 5px outset;
     text-align-last: start;
 }
@@ -306,8 +307,8 @@ input[type=number] {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 8rem;
-    color: #33691E;
+    font-size: 7rem;
+    color: #7955;
     text-shadow: 3px -3px 8px #212529;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -316,8 +317,8 @@ input[type=number] {
 .loader {
     border: 4px solid rgba(0, 0, 0, 0.22);
     border-radius: 15rem;
-    border-top: 4px dotted #33691e;
-    border-bottom: 4px dotted #33691e;
+    border-top: 4px dotted #FFD54F;
+    border-bottom: 4px dotted #FFD54F;
     width: 12rem;
     height: 12rem;
     -webkit-animation: spin 2s linear infinite;
