@@ -3,7 +3,7 @@ import json
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from scripts.create_team import create_team, Team
+from scripts.create_team import create_team, Team, update_member
 
 app = FastAPI()
 
@@ -17,10 +17,13 @@ async def generate_team(team_size: int = 3, team_role: str = "", team_company: s
     return JSONResponse(content=team, headers=headers)
 
 
+@app.get("/updatemember")
+async def generate_team(team_size: int = 3, team_role: str = "", team_company: str = "", team_name: str = ""):
+    return JSONResponse(content=update_member, headers=headers)
+
 @app.get("/roles")
 async def get_roles():
     return JSONResponse(content=list(Team.job_titles), headers=headers)
-
 
 @app.get("/personalities")
 async def get_personality_types():

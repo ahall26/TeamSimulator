@@ -56,9 +56,9 @@
                 <span class="dark" ng-if="!(loading.pendingRequests.length === 0)">
                     <span class="text">
                         <div class="loader" style="background-color: rgba(0, 0, 0, 0.66);
-    box-shadow: 0 0 2px 2px #FFD54F;">
+    box-shadow: 0 0 2px 2px #004912;">
                         </div>
-                        <span class="text fas fa-poo"></span>
+                        <span class="text fas fa-cannabis"></span>
                     </span>
                 </span>
                 <div class="scale">
@@ -120,16 +120,32 @@
                             </table>
                             <div class="details"
                                  style="border-color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}}; color: {{mem.mbti.BGColor}}">
-                                <div class="strengths">
-                                    <h3>Strengths</h3>
-                                    <ul ng-repeat="s in mem.mbti.Strengths">
-                                        <li>{{s}}</li>
+                                <div class="sw">
+                                    <div class="strengths">
+                                        <h3>Strengths</h3>
+                                        <ul ng-repeat="s in mem.mbti.Strengths">
+                                            <li>{{s}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="weaknesses">
+                                        <h3>Weaknesses</h3>
+                                        <ul ng-repeat="w in mem.mbti.Weaknesses">
+                                            <li>{{w}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="functions">
+                                    <h3>{{mem.personality_type}} Key Functions</h3>
+                                    <li>Dominant: {{mem.mbti.Dominant}}</li>
+                                    <li>Auxiliary: {{mem.mbti.Auxiliary}}</li>
+                                    <li>Tertiary: {{mem.mbti.Tertiary}}</li>
+                                    <li>Inferior: {{mem.mbti.Inferior}}</li>
                                     </ul>
                                 </div>
-                                <div class="weaknesses">
-                                    <h3>Weaknesses</h3>
-                                    <ul ng-repeat="w in mem.mbti.Weaknesses">
-                                        <li>{{w}}</li>
+                                <div class="characteristics">
+                                    <h3>{{mem.personality}} Characteristics</h3>
+                                    <ul ng-repeat="k in mem.mbti.KeyCharacteristics">
+                                        <li>{{k}}</li>
                                     </ul>
                                 </div>
                             </div>

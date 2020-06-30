@@ -54,10 +54,11 @@ body {
 .avatar {
     background: #9e9e9e61;
     border-radius: 0.1em;
-    border: 1rem double wheat;
+    border: 3px groove wheat;
     -webkit-box-shadow: rgba(0, 0, 0, 0.31) -5px -107px 72px -24px inset;
     box-shadow: rgba(0, 0, 0, 0.31) -5px -107px 72px -24px inset;
     max-width: 240px;
+    padding: 1rem;
 }
 
 .teamName {
@@ -119,7 +120,6 @@ button:active {
     font-weight: bolder;
     font-size: medium;
     padding-bottom: 2rem;
-    padding-top: 2rem;
     text-align-last: left;
 }
 
@@ -128,7 +128,7 @@ button:active {
 }
 
 .profCard:hover .details {
-    display: flex;
+    display: table;
 }
 
 td {
@@ -229,6 +229,10 @@ td {
     left: -549px;
 }
 
+.sw {
+    display: flex;
+}
+
 .strengths, .weaknesses {
     display: inline-block;
     width: 50%;
@@ -246,6 +250,10 @@ td {
     flex: 1;
     margin: 0;
     font-weight: bolder;
+}
+
+.characteristics {
+
 }
 
 /* width */
@@ -290,17 +298,17 @@ input[type=number] {
 }
 
 .dark {
-    position: fixed; /* Sit on top of the page content */
-    display: block; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
+    background-color: rgba(0, 0, 0, 0.29);
+    z-index: 2;
+    cursor: pointer;
 }
 
 .text {
@@ -308,7 +316,7 @@ input[type=number] {
     top: 50%;
     left: 50%;
     font-size: 7rem;
-    color: #7955;
+    color: #33691E;
     text-shadow: 3px -3px 8px #212529;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -317,8 +325,8 @@ input[type=number] {
 .loader {
     border: 4px solid rgba(0, 0, 0, 0.22);
     border-radius: 15rem;
-    border-top: 4px dotted #FFD54F;
-    border-bottom: 4px dotted #FFD54F;
+    border-top: 4px dotted #33691E;
+    border-bottom: 4px dotted #33691E;
     width: 12rem;
     height: 12rem;
     -webkit-animation: spin 2s linear infinite;

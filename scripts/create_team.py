@@ -5,6 +5,10 @@ from urllib.parse import unquote
 from faker import Faker
 
 
+def update_member(ethnicity, gender, age):
+    pass
+
+
 def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=3, max=10),
                 team_company=Faker().last_name(), team_name=""):
     def get_personality():
@@ -78,7 +82,6 @@ def create_team(num=1, team_role="Accountant", team_size=Faker().random_int(min=
         team_compatibility = []
         team_combo = []
         for _ in range(team_size):
-
             if Random().randint(1, 2) == 1:
                 gender = 'Male'
             else:
