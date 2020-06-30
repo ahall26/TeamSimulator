@@ -2,71 +2,54 @@ body {
     background: #212529;
     color: rgba(255, 255, 255, .8);
     font-family: Poppins, sans-serif;
+    font-size: medium;
 }
 
 .title {
-    margin-top: 0;
-    margin-bottom: 5px;
     text-shadow: -4px 4px 3px black;
 }
 
 .teamMain {
     background-color: #27293d;
-    margin-bottom: 2rem;
 }
 
 .createTeam {
-    padding: .5rem;
     box-shadow: -5px 5px 7px 0px #000000ad;
-    line-height: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
 }
 
 .profCard select {
     color: inherit;
-    text-align-last: center;
 }
 
 .createTeam input, select {
     background: inherit;
     color: #999;
-    border: inherit;
-    padding-left: .5rem;
+    border: none;
 }
 
 .createTeam input:hover, select:hover {
     border-bottom: .02rem solid #bac9c7f2;
 }
 
-.createTeam input:focus {
-    text-align: center;
-}
 
 .memContainer {
     box-shadow: inset -11px 4px 8px #00000082;
     background-color: rgba(0, 0, 0, 0.15);
-    min-width: 740px;
-    padding: 1rem;
-    max-height: 29rem;
-    overflow-x: scroll;
-    overflow-y: hidden;
 }
 
 .avatar {
     background: #9e9e9e61;
     border-radius: 0.1em;
-    border: 1rem double wheat;
     -webkit-box-shadow: rgba(0, 0, 0, 0.31) -5px -107px 72px -24px inset;
     box-shadow: rgba(0, 0, 0, 0.31) -5px -107px 72px -24px inset;
-    max-width: 240px;
+    max-width: 144px;
 }
 
 .teamName {
-    text-align: center;
-    margin-bottom: 0;
-    font-weight: lighter;
-    font-size: 2rem;
     text-transform: uppercase;
-    margin-top: 0;
+    place-content: center;
 }
 
 button {
@@ -88,47 +71,15 @@ button:active {
 
 }
 
-.scale {
-    transform: scale(.5);
-    transform-origin: top;
-}
-
 .profCard {
-    font-weight: bold;
-    font-size: 1rem;
-    text-align: center;
-    width: 380px;
-    padding: 3rem;
-    padding-bottom: 2rem;
-    margin: 1rem;
-    padding-top: 2px;
     -webkit-box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
     box-shadow: -13px 1px 11px 1px rgba(0, 0, 0, 0.52);
-}
-
-.profCard:hover {
-    transform: scale(1.1);
-}
-
-.description {
-    text-align: left;
-    width: 100%;
-    display: none;
-    background-color: inherit;
-    color: inherit;
-    font-weight: bolder;
-    font-size: medium;
-    padding-bottom: 2rem;
-    padding-top: 2rem;
-    text-align-last: left;
-}
-
-.profCard:hover .description {
-    display: block;
+    max-width: 330px;
+    padding: 1rem;
 }
 
 .profCard:hover .details {
-    display: flex;
+    display: block;
 }
 
 td {
@@ -145,23 +96,27 @@ td {
     color: inherit;
     background-color: inherit;
     border: none;
+    margin: 1rem;
 }
 
 .personaCard {
     box-shadow: rgba(0, 0, 0, 0.22) 0px -111px 56px 5px inset;
-    overflow: hidden;
     border: 1px dashed wheat;
-    display: table;
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 1rem;
+    padding: .5rem;
 }
 
 .personaCard span {
-    font-size: 4rem;
     text-shadow: black 4px 3px 0px;
-    display: table-cell;
-    vertical-align: middle;
+    font-size: x-large;
+}
+
+.list-group-item {
+    background-color: inherit;
+    font-size: small;
+}
+
+.personaCard i {
+    font-size: x-small;
 }
 
 .personaCard p {
@@ -170,45 +125,19 @@ td {
 }
 
 .personaCard b {
-    font-size: 1.5rem;
     display: block;
     text-align: center;
-    margin-bottom: 1rem;
 }
 
 .personaType {
-    margin-bottom: -1.5rem;
     font-weight: bolder;
-    margin-left: 15%;
-    margin-right: 15%;
-    font-size: larger;
-}
-
-.row {
-    display: table;
-    border-spacing: 20px;
-    transform-origin: top left;
-}
-
-.item {
-    display: table-cell;
-    flex: 1;
-}
-
-.main {
-    padding: 3rem;
-    padding-top: 1rem;
 }
 
 .details {
     display: none;
     padding: 20px;
-    position: absolute;
-    right: -549px;
-    top: 0px;
-    width: 500px;
-    border: 5px outset;
-    text-align-last: start;
+    font-size: small;
+    margin-top: 1rem;
 }
 
 .animate-if.ng-enter, .animate-if.ng-leave {
@@ -236,16 +165,6 @@ td {
     text-align: left;
     flex: 1;
     line-height: 1.1rem;
-}
-
-.strengths h3, .weaknesses h3 {
-    display: inline-block;
-    width: 50%;
-    height: 100%;
-    text-align: left;
-    flex: 1;
-    margin: 0;
-    font-weight: bolder;
 }
 
 /* width */
@@ -290,17 +209,24 @@ input[type=number] {
 }
 
 .dark {
-    position: fixed; /* Sit on top of the page content */
-    display: block; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.text {
+    color: #8277179c;
+    text-shadow: 3px -3px 8px #212529;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 .text {
@@ -308,7 +234,7 @@ input[type=number] {
     top: 50%;
     left: 50%;
     font-size: 7rem;
-    color: #7955;
+    color: #827717;
     text-shadow: 3px -3px 8px #212529;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -316,9 +242,9 @@ input[type=number] {
 
 .loader {
     border: 4px solid rgba(0, 0, 0, 0.22);
+    border-top: 4px dotted #827717;
+    border-bottom: 4px dotted #827717;
     border-radius: 15rem;
-    border-top: 4px dotted #FFD54F;
-    border-bottom: 4px dotted #FFD54F;
     width: 12rem;
     height: 12rem;
     -webkit-animation: spin 2s linear infinite;
