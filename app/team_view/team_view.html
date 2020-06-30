@@ -59,16 +59,18 @@
         </div>
         <h3 class="teamName text-center row" ng-bind="myData.team.team_name"></h3>
         <div class="memContainer row">
-            <div class="item text-center" ng-repeat="mem in members">
+            <div class="text-center" ng-repeat="mem in members">
                 <div class="profCard"
                      style="background-color: {{mem.mbti.BGColor}}; color: {{mem.mbti.FTColor}}">
                     <h5>{{mem.name}}</h5>
                     <p style="margin-top: -1rem">{{myData.team.team_role + ' ' + mem.level}}</p>
                     <img class="avatar mx-auto d-block" src={{mem.jobavatar.Source}}
                          style="border-color: {{mem.mbti.FTColor}}">
-                    <p class="personaType"
-                       style="color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}};">
-                        <select ng-change="updateTeamMember(mem.id,mem.personality)" ng-model="mem.personality">
+                    <p>
+                        <select class="personaType"
+                                ng-change="updateTeamMember(mem.id,mem.personality)"
+                                ng-model="mem.personality"
+                                style="color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}};">
                             <option ng-selected="selected" value="{{mem.personality}}">{{mem.personality}}
                             </option>
                             <option label="{{p.ID + ' - ' + p.AltName}}" ng-repeat="p in team_personalities"
@@ -82,50 +84,46 @@
                             <i>{{mem.mbti.Description}}</i>
                         </p>
                     </div>
-                    <table class="description">
-                        <tr>
-                            <td>Personality:</td>
-                            <td>{{mem.personality}}</td>
-                        </tr>
-                        <tr>
-                            <td>Age:</td>
-                            <td><input max="100" min="18" ng-model="mem.age" type="number"
-                                       value="{{mem.age}}"></td>
-                        </tr>
-                        <tr>
-                            <td>Ethnicity:</td>
-                            <td><select style="text-align-last: center;">
+                    <div class="list-group list-group-flush text-left" style="line-height: 0">
+                        <div class="list-group-item">
+                            <label>Age: </label>
+                            <input max="100" min="18" ng-model="mem.age" type="number"
+                                   value="{{mem.age}}">
+                        </div>
+                        <div class="list-group-item">
+                            <lable>Ethnicity:</lable>
+                            <select style="text-align-last: center;">
                                 <option label="{{mem.ethnicity}}" selected="selected"></option>
                                 <option ng-repeat="e in ethnicities" value="{{e}}">{{e}}</option>
-                            </select></td>
-                        </tr>
-                        <tr>
-                            <td>Gender:</td>
-                            <td>{{mem.gender}}</td>
-                        </tr>
-                        <tr>
-                            <td>Happiness:</td>
-                            <td>{{mem.happiness}}</td>
-                        </tr>
-                        <tr>
-                            <td>Status:</td>
-                            <td>{{mem.status}}</td>
-                        </tr>
-                        <tr>
-                            <td>Title:</td>
-                            <td>{{mem.title + ' ' + mem.level}}</td>
-                        </tr>
-                    </table>
+                            </select>
+                        </div>
+                        <div class="list-group-item">
+                            <lable>Gender:</lable>
+                            <span>{{mem.gender}}</span>
+                        </div>
+                        <div class="list-group-item">
+                            <lable>Happiness:</lable>
+                            <span>{{mem.happiness}}</span>
+                        </div>
+                        <div class="list-group-item">
+                            <lable>Status:</lable>
+                            <span>{{mem.status}}</span>
+                        </div>
+                        <div class="list-group-item">
+                            <lable>Title:</lable>
+                            <span>{{mem.title + ' ' + mem.level}}</span>
+                        </div>
+                    </div>
                     <div class="details"
                          style="border-color: {{mem.mbti.BGColor}}; background-color: {{mem.mbti.FTColor}}; color: {{mem.mbti.BGColor}}">
                         <div class="strengths">
-                            <h3>Strengths</h3>
+                            <h5>Strengths</h5>
                             <ul ng-repeat="s in mem.mbti.Strengths">
                                 <li>{{s}}</li>
                             </ul>
                         </div>
                         <div class="weaknesses">
-                            <h3>Weaknesses</h3>
+                            <h5>Weaknesses</h5>
                             <ul ng-repeat="w in mem.mbti.Weaknesses">
                                 <li>{{w}}</li>
                             </ul>
