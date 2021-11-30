@@ -19,9 +19,6 @@ npm start
 #### Navigate to localhost:8000
 ![Team Simulator Interface](https://github.com/ahall26/TeamSimulator/blob/master/team_sim.png)
 
-### Enneagram of Personality Personality type 
-https://n7.nextpng.com/sticker-png/255/589/sticker-png-enneagram-of-personality-personality-type-myers-briggs-type-indicator-personality-test-others-text-psychology-coach-individual.png
-
 #### Open API Docs
 http://localhost:8080/docs
 
